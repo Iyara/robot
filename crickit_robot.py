@@ -31,19 +31,22 @@ class Robot:
         speed += self._left_trim
         speed = max(-1, min(1, speed)) #constrain speed to 0-255 after trimming
         print("left throttle ", speed)
-        crickit.continuous_servo_1.throttle = speed
+        crickit.continuous_servo_2.throttle = speed
 
     def _right_speed(self, speed):
+        speed = -1 * speed
+        print("right speed ", speed)
         assert -1 <= speed <= 1, "right Speed must be a value between -1 to 1 inclusive!"
         speed += self._right_trim
         speed = max(-1, min(1, speed))
-        crickit.continuous_servo_2.throttle = speed
+        print("right throttle ", speed)
+        crickit.continuous_servo_1.throttle = speed
 
     @staticmethod
     def stop():
         print("called stop")
-        crickit.continuous_servo_1.throttle = 0
         crickit.continuous_servo_2.throttle = 0
+        crickit.continuous_servo_1.throttle = 0
 
     def forward(self, speed, seconds=None):
         """move forward at the specified speed (0-255). will start moving forward and
